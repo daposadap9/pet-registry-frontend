@@ -61,7 +61,7 @@ export default {
     async checkEmail() {
       if (this.email) {
         try {
-          const response = await axios.post('https://pet-registry-production.up.railway.app/api/check-email', { email: this.email });
+          const response = await axios.post(`${process.env.VUE_APP_API_URL}/check-email`, { email: this.email });
           this.emailExists = response.data.exists;
         } catch (error) {
           console.error('Error al comprobar el correo electrónico:', error);
@@ -86,7 +86,7 @@ export default {
         return;
       }
       try {
-        await axios.post('https://pet-registry-production.up.railway.app/api/register', {
+        await axios.post(`${process.env.VUE_APP_API_URL}/register`, {
           name: this.name,
           email: this.email,
           password: this.password,
