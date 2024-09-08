@@ -12,10 +12,16 @@ export default {
   components: {
     Home
   },
-  middleware: 'auth', // El middleware maneja la redirección
-  computed: {
-    isAuthenticated() {
-      return !!localStorage.getItem('token');
+  middleware: 'auth', // Middleware maneja la redirección
+  data() {
+    return {
+      isAuthenticated: false
+    };
+  },
+  async created() {
+    if (process.client) {
+      // Verifica el token en el cliente y actualiza el estado
+      this.isAuthenticated = !!localStorage.getItem('token');
     }
   }
 };
