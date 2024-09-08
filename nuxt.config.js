@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 export default {
   target: 'static',
   head: {
@@ -19,19 +21,20 @@ export default {
   plugins: [],
   components: true,
   buildModules: [
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/dotenv'
   ],
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/proxy'
   ],
   axios: {
-    proxy: true, // Habilitar el proxy para ocultar la URL completa
+    proxy: true,
   },
   proxy: {
     '/api/': {
-      target: 'https://pet-registry-production.up.railway.app', // URL de tu backend
-      pathRewrite: { '^/api/': '/api/' },
+      target: process.env.VUE_APP_API_URL,
+      pathRewrite: { '^/api/': '' },
       changeOrigin: true
     }
   },
