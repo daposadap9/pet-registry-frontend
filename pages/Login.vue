@@ -43,7 +43,7 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await axios.post(`${runtimeConfig.apiURL}/login`, {
+        const response = await axios.post('https://pet-registry-production.up.railway.app/api/login', {
           email: this.email,
           password: this.password,
         });
@@ -59,7 +59,6 @@ export default {
 
         this.$router.push('/');
       } catch (error) {
-        console.log(process.env.VUE_APP_API_URL);
         this.notification = {
           show: true,
           message: 'Error al iniciar sesión. Verifica tus credenciales.',

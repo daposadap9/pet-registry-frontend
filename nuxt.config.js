@@ -28,8 +28,15 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/proxy'
   ],
-  runtimeConfig: {
-    apiURL: process.env.VUE_APP_API_URL,  // Usamos la API desde Netlify
+  axios: {
+    proxy: true,
+  },
+  proxy: {
+    '/api/': {
+      target: process.env.VUE_APP_API_URL,
+      pathRewrite: { '^/api/': '' },
+      changeOrigin: true
+    }
   },
   build: {},
   router: {
