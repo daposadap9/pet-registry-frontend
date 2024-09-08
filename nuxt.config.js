@@ -38,7 +38,7 @@ export default {
       changeOrigin: true
     }
   },
-  publicRuntimeConfig: {
+  runtimeConfig: {
     apiURL: process.env.VUE_APP_API_URL,  // Usamos la API desde Netlify
   },
   build: {},
