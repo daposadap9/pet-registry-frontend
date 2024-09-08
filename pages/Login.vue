@@ -59,6 +59,7 @@ export default {
 
         this.$router.push('/');
       } catch (error) {
+        console.log(console.log(process.env.VUE_APP_API_URL))
         this.notification = {
           show: true,
           message: 'Error al iniciar sesión. Verifica tus credenciales.',
