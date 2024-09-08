@@ -150,7 +150,7 @@ export default {
     },
     async fetchPets() {
       try {
-        const response = await axios.get(`${process.env.VUE_APP_API_URL}/pets`, {
+        const response = await axios.get(`${runtimeConfig.apiURL}/pets`, {
           params: { state_id: this.selectedState },
           headers: this.getAuthHeaders()
         });
@@ -161,7 +161,7 @@ export default {
     },
     async fetchStates() {
       try {
-        const response = await await axios.get(`${process.env.VUE_APP_API_URL}/states`, {
+        const response = await await axios.get(`${runtimeConfig.apiURL}/states`, {
           headers: this.getAuthHeaders()
         });
         this.states = response.data;
@@ -171,7 +171,7 @@ export default {
     },
     async fetchCategories() {
       try {
-        const response = await axios.get(`${process.env.VUE_APP_API_URL}/categories`, {
+        const response = await axios.get(`${runtimeConfig.apiURL}/categories`, {
           headers: this.getAuthHeaders()
         });
         this.categories = response.data;
@@ -195,13 +195,13 @@ export default {
     async submitForm() {
       try {
         if (this.isEdit) {
-          await axios.put(`${process.env.VUE_APP_API_URL}/pets/${this.form.id}`, this.form, {
+          await axios.put(`${runtimeConfig.apiURL}/pets/${this.form.id}`, this.form, {
             headers: this.getAuthHeaders()
           });
           this.showAlert('Mascota actualizada con éxito.', 'success');
         } else {
           const { id, ...newFormData } = this.form;
-          await axios.post(`${process.env.VUE_APP_API_URL}/pets`, newFormData, {
+          await axios.post(`${runtimeConfig.apiURL}/pets`, newFormData, {
             headers: this.getAuthHeaders()
           });
           this.showAlert('Mascota agregada con éxito.', 'success');
@@ -218,7 +218,7 @@ export default {
     },
     async confirmDeletePet() {
       try {
-        await axios.delete(`${process.env.VUE_APP_API_URL}/pets/${this.currentPetId}`, {
+        await axios.delete(`${runtimeConfig.apiURL}/pets/${this.currentPetId}`, {
           headers: this.getAuthHeaders()
         });
         this.showAlert('Mascota eliminada con éxito.', 'success');
