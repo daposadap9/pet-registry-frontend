@@ -43,7 +43,7 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await axios.post('https://pet-registry-production.up.railway.app/api/login', {
+        const response = await axios.post('/api/login', {  // Se utiliza el proxy para evitar usar la URL completa
           email: this.email,
           password: this.password,
         });
