@@ -33,10 +33,13 @@ export default {
   },
   proxy: {
     '/api/': {
-      target: process.env.VUE_APP_API_URL,
+      target: process.env.VUE_APP_API_URL,  // Tu API externa en Railway
       pathRewrite: { '^/api/': '' },
       changeOrigin: true
     }
+  },
+  publicRuntimeConfig: {
+    apiURL: process.env.VUE_APP_API_URL,  // Usamos la API desde Netlify
   },
   build: {},
   router: {
