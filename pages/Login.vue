@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-500">
+  <div class="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-500 p-2">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
       <h2 class="text-2xl font-bold mb-6 text-center">Iniciar Sesión</h2>
       <form @submit.prevent="login">
