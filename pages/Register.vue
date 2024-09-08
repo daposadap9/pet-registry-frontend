@@ -29,7 +29,7 @@
     </div>
   </div>
 </template>
-
+<!--prueba-->
 <script>
 import axios from 'axios';
 import Notification from '../components/Notification.vue';
