@@ -16,7 +16,7 @@
           ¿No tienes una cuenta? <a href="/register" class="text-blue-500 hover:underline">Regístrate</a>
         </p>
       </form>
-      <Notification :show="notification.show" :message="notification.message" :success="notification.success"/>
+      <Notification :show="notification.show" :message="notification.message" :success="notification.success" />
     </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await axios.post('/api/login', {  // Se utiliza el proxy para evitar usar la URL completa
+        const response = await axios.post('/api/login', {
           email: this.email,
           password: this.password,
         });

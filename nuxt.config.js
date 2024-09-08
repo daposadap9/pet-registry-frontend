@@ -22,11 +22,18 @@ export default {
     '@nuxtjs/tailwindcss'
   ],
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
   axios: {
-    // Configura la baseURL si es necesario
-    baseURL: 'https://pet-registry-production.up.railway.app/api'
+    proxy: true, // Habilitar el proxy para ocultar la URL completa
+  },
+  proxy: {
+    '/api/': {
+      target: 'https://pet-registry-production.up.railway.app', // URL de tu backend
+      pathRewrite: { '^/api/': '/api/' },
+      changeOrigin: true
+    }
   },
   build: {},
   router: {
