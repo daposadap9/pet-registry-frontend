@@ -9,7 +9,7 @@
     </header>
 
     <!-- Contenido principal -->
-    <div class="container mx-auto px-4 py-6 mt-16 p-1">
+    <div class="container mx-auto px-4 py-6 mt-16 p-1"> <!-- Añadir mt-16 para dejar espacio para el header -->
       <h1 class="text-4xl font-bold text-center mb-6">Mascotas</h1>
 
       <!-- Alerta de éxito o error -->
@@ -105,6 +105,7 @@
   </div>
 </template>
 
+
 <script>
 import axios from 'axios';
 
@@ -128,7 +129,7 @@ export default {
       alert: {
         message: '',
         type: ''
-      },
+      }, // { type: 'success' | 'error' }
       showConfirmDelete: false
     };
   },
@@ -137,6 +138,11 @@ export default {
     await this.fetchStates();
     await this.fetchCategories();
   },
+  watch: {
+    selectedState(newValue) {
+      this.fetchPets(); // Refrescar las mascotas cuando se cambia el filtro
+    }
+  },
   methods: {
     getAuthHeaders() {
       const token = localStorage.getItem('token');
@@ -144,7 +150,7 @@ export default {
     },
     async fetchPets() {
       try {
-        const response = await axios.get('/api/pets', {
+        const response = await axios.get('https://pet-registry-production.up.railway.app/api/pets', {
           params: { state_id: this.selectedState },
           headers: this.getAuthHeaders()
         });
@@ -155,7 +161,7 @@ export default {
     },
     async fetchStates() {
       try {
-        const response = await axios.get('/api/states', {
+        const response = await axios.get('https://pet-registry-production.up.railway.app/api/states', {
           headers: this.getAuthHeaders()
         });
         this.states = response.data;
@@ -165,7 +171,7 @@ export default {
     },
     async fetchCategories() {
       try {
-        const response = await axios.get('/api/categories', {
+        const response = await axios.get('https://pet-registry-production.up.railway.app/api/categories', {
           headers: this.getAuthHeaders()
         });
         this.categories = response.data;
@@ -179,56 +185,60 @@ export default {
       this.showForm = true;
     },
     openEditForm(pet) {
-      this.form.name = pet.name;
-      this.form.category_id = pet.category_id;
-      this.form.state_id = pet.state_id;
-      this.form.image_url = pet.image_url;
-      this.currentPetId = pet.id;
+      this.form = { ...pet };
       this.isEdit = true;
       this.showForm = true;
+    },
+    closeForm() {
+      this.showForm = false;
     },
     async submitForm() {
       try {
         if (this.isEdit) {
-          await axios.put(`/api/pets/${this.currentPetId}`, this.form, {
+          await axios.put(`https://pet-registry-production.up.railway.app/api/pets/${this.form.id}`, this.form, {
             headers: this.getAuthHeaders()
           });
-          this.showAlert('Mascota actualizada exitosamente.', 'success');
+          this.showAlert('Mascota actualizada con éxito.', 'success');
         } else {
-          await axios.post('/api/pets', this.form, {
+          const { id, ...newFormData } = this.form;
+          await axios.post('https://pet-registry-production.up.railway.app/api/pets', newFormData, {
             headers: this.getAuthHeaders()
           });
-          this.showAlert('Mascota agregada exitosamente.', 'success');
+          this.showAlert('Mascota agregada con éxito.', 'success');
         }
-        this.showForm = false;
-        this.fetchPets();
+        this.closeForm();
+        this.fetchPets(); // Refrescar la lista de mascotas después de agregar/editar
       } catch (error) {
-        this.showAlert('Error al guardar la mascota.', 'error');
+        this.showAlert('Error al enviar el formulario.', 'error');
       }
+    },
+    async confirmDelete(id) {
+      this.currentPetId = id;
+      this.showConfirmDelete = true;
     },
     async confirmDeletePet() {
       try {
-        await axios.delete(`/api/pets/${this.currentPetId}`, {
+        await axios.delete(`https://pet-registry-production.up.railway.app/api/pets/${this.currentPetId}`, {
           headers: this.getAuthHeaders()
         });
-        this.showAlert('Mascota eliminada exitosamente.', 'success');
-        this.showConfirmDelete = false;
-        this.fetchPets();
+        this.showAlert('Mascota eliminada con éxito.', 'success');
+        this.fetchPets(); // Refrescar la lista de mascotas después de eliminar
       } catch (error) {
         this.showAlert('Error al eliminar la mascota.', 'error');
       }
-    },
-    confirmDelete(petId) {
-      this.currentPetId = petId;
-      this.showConfirmDelete = true;
+      this.showConfirmDelete = false;
     },
     cancelDelete() {
       this.showConfirmDelete = false;
-      this.currentPetId = null;
     },
-    closeForm() {
-      this.showForm = false;
-      this.resetForm();
+    showAlert(message, type) {
+      this.alert = {
+        message,
+        type
+      };
+      setTimeout(() => {
+        this.alert = { message: '', type: '' }; // Ocultar alerta después de 5 segundos
+      }, 5000);
     },
     resetForm() {
       this.form = {
@@ -238,42 +248,38 @@ export default {
         image_url: ''
       };
     },
-    getStateName(stateId) {
-      const state = this.states.find(s => s.id === stateId);
-      return state ? state.name : 'Desconocido';
-    },
     getCategoryName(categoryId) {
-      const category = this.categories.find(c => c.id === categoryId);
+      const category = this.categories.find(cat => cat.id === categoryId);
       return category ? category.name : 'Desconocido';
+    },
+    getStateName(stateId) {
+      const state = this.states.find(st => st.id === stateId);
+      return state ? state.name : 'Desconocido';
     },
     logout() {
       localStorage.removeItem('token');
-      this.$router.push('/login');
-    },
-    showAlert(message, type) {
-      this.alert.message = message;
-      this.alert.type = type;
-      setTimeout(() => {
-        this.alert.message = '';
-        this.alert.type = '';
-      }, 3000);
+      this.$router.push('/login'); // Redirige al usuario a la página de login
     }
   }
 };
 </script>
 
+
 <style scoped>
 .alert {
+  position: relative;
   padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 0.25rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
+
 .alert.success {
-  background-color: #48bb78;
-  color: #fff;
+  background-color: #d4edda;
+  color: #155724;
 }
+
 .alert.error {
-  background-color: #f56565;
-  color: #fff;
+  background-color: #f8d7da;
+  color: #721c24;
 }
 </style>
