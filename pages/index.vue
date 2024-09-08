@@ -12,7 +12,7 @@ export default {
   components: {
     Home
   },
-  middleware: 'auth',
+  middleware: 'auth', // Middleware maneja la redirección
   data() {
     return {
       isAuthenticated: false
@@ -20,10 +20,8 @@ export default {
   },
   async created() {
     if (process.client) {
+      // Verifica el token en el cliente y actualiza el estado
       this.isAuthenticated = !!localStorage.getItem('token');
-      if (!this.isAuthenticated) {
-        this.$router.push('/login');
-      }
     }
   }
 };
