@@ -9,7 +9,7 @@
     </header>
 
     <!-- Contenido principal -->
-    <div class="container mx-auto px-4 py-6 mt-16"> <!-- Añadir mt-16 para dejar espacio para el header -->
+    <div class="container mx-auto px-4 py-6 mt-16 p-1"> <!-- Añadir mt-16 para dejar espacio para el header -->
       <h1 class="text-4xl font-bold text-center mb-6">Mascotas</h1>
 
       <!-- Alerta de éxito o error -->
