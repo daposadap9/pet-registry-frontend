@@ -12,18 +12,10 @@ export default {
   components: {
     Home
   },
-  middleware: 'auth',
-  data() {
-    return {
-      isAuthenticated: false
-    };
-  },
-  async created() {
-    if (process.client) {
-      this.isAuthenticated = !!localStorage.getItem('token');
-      if (!this.isAuthenticated) {
-        this.$router.push('/login');
-      }
+  middleware: 'auth', // El middleware maneja la redirección
+  computed: {
+    isAuthenticated() {
+      return !!localStorage.getItem('token');
     }
   }
 };
