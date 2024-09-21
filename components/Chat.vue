@@ -3,28 +3,27 @@
       <h1 class="text-4xl font-bold text-center mb-6 text-white shadow-lg p-4 border-b-4 border-blue-500">Mensajes</h1>
   
       <!-- Lista de mensajes -->
-      <div
-        v-for="message in messages"
-        :key="message.id"
-        :class="[
-          'message-container',
-          message.sender === 'Usuario1' ? 'sent' : 'received'
-        ]"
-      >
-        <div class="flex items-center mb-2">
-          <img
-            :src="message.profilePic"
-            alt="Profile Picture"
-            class="w-12 h-12 rounded-full mr-4"
-          />
-          <h2 class="text-lg font-bold text-white">{{ message.senderAlias }}</h2>
+      <div class="flex-1 overflow-y-auto mb-20">
+        <div
+          v-for="message in messages"
+          :key="message.id"
+          :class="['message-container', message.sender === 'Usuario1' ? 'sent' : 'received']"
+        >
+          <div class="flex items-center mb-2">
+            <img
+              :src="message.profilePic"
+              alt="Profile Picture"
+              class="w-12 h-12 rounded-full mr-4"
+            />
+            <h2 class="text-lg font-bold text-white sm:text-md">{{ message.senderAlias }}</h2>
+          </div>
+          <p class="message-content text-lg sm:text-md">{{ message.content }}</p>
+          <p class="message-timestamp">{{ message.timestamp }}</p>
         </div>
-        <p class="message-content text-lg">{{ message.content }}</p>
-        <p class="message-timestamp">{{ message.timestamp }}</p>
       </div>
   
       <!-- Formulario para enviar mensajes -->
-      <div class="message-form mt-auto">
+      <div class="message-form fixed bottom-0 left-0 w-full bg-gray-800 p-4 z-10 mb-20 md:mb-0">
         <form @submit.prevent="sendMessage">
           <div class="flex items-center gap-2">
             <textarea
@@ -70,30 +69,18 @@
   <style scoped>
   /* Estilos para la vista de mensajes */
   .message-container {
-    @apply p-6 rounded-lg shadow-2xl mb-6 w-full max-w-4xl;
+    @apply p-6 rounded-lg shadow-2xl mb-6 max-w-full; /* Permitir que se ajuste dinámicamente */
     position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  @media (max-width: 1024px) {
-    .message-container {
-      @apply max-w-2xl;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .message-container {
-      @apply max-w-md;
-    }
   }
   
   .message-container.sent {
-    @apply bg-blue-800 self-end;
+    @apply bg-blue-800 self-end ml-auto; /* Alineación a la derecha para mensajes enviados */
+    max-width: 70%; /* Máximo ancho para mensajes enviados */
   }
   
   .message-container.received {
-    @apply bg-gray-700 self-start;
+    @apply bg-gray-700 self-start mr-auto; /* Alineación a la izquierda para mensajes recibidos */
+    max-width: 70%; /* Máximo ancho para mensajes recibidos */
   }
   
   .message-content {
