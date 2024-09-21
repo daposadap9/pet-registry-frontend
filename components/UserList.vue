@@ -1,4 +1,4 @@
-<template>
+<template class="bg-chat-background">
     <div class="bg-gray-800 text-white w-64 min-h-screen p-4 shadow-lg transition-all duration-300 ease-in-out">
       <h2 class="text-2xl font-bold mb-4">Usuarios</h2>
       <nav>
