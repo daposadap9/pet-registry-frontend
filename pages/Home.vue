@@ -8,7 +8,7 @@
       <!-- Header con botón de cerrar sesión -->
       <Header/>
 
-      <div class="container mx-auto px-4 py-6 mt-16 p-1">
+      <div class="container mx-auto px-4 py-6 mt-16 p-1 h-screen">
         <h1 class="text-4xl font-bold text-center mb-6">Mascotas</h1>
 
         <!-- Alerta de éxito o error -->

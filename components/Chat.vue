@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-1 bg-gray-900 p-4">
+    <div class="flex-1 bg-gray-900 p-4 h-screen">
       <h1 class="text-4xl font-bold text-center mb-6 text-white shadow-lg p-4 border-b-4 border-blue-500">Mensajes</h1>
   
       <!-- Lista de mensajes -->

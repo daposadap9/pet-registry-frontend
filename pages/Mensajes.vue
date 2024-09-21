@@ -1,15 +1,15 @@
-<template>
+<template class>
     <div class="flex">
       <VerticalMenu class="z-10" />
-      <div class="flex-1">
+      <div class="flex-1 bg-slate-800">
         <Header />
   
-        <div class="container mx-auto px-4 py-6 mt-16 p-1 bg-gray-900">
-          <div class="hidden md:flex">
+        <div class="mx-auto px-4 py-6 mt-16 p-1 bg-gray-900 h-full">
+          <div class="hidden lg:flex">
             <UserList :users="users" @select-user="selectUser" />
             <Chat :messages="messages" :sendMessage="sendMessage" :newMessage="newMessage" />
           </div>
-          <div class="md:hidden">
+          <div class="lg:hidden">
             <div class="tabs">
               <button @click="activeTab = 'users'" :class="{ 'active': activeTab === 'users' }">Usuarios</button>
               <button @click="activeTab = 'messages'" :class="{ 'active': activeTab === 'messages' }">Mensajes</button>

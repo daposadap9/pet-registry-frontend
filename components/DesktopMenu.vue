@@ -1,5 +1,5 @@
 <template>
-    <aside class="bg-gray-800 text-white w-64 min-h-screen p-4 shadow-lg transition-all duration-300 ease-in-out mt-16">
+    <aside class="bg-gray-800 text-white w-64 p-4 shadow-lg transition-all duration-300 ease-in-out mt-16 h-full">
       <h2 class="text-2xl font-bold mb-4">Menú</h2>
       <nav>
         <ul>
