@@ -9,7 +9,7 @@
             <Chat :messages="messages" :sendMessage="sendMessage" :newMessage="newMessage" />
           </div>
           <div class="lg:hidden bg-blue-700">
-            <div class="tabs w-5">
+            <div class="tabs w-5" v-if="activeTab === 'messages'"> <!-- Mostrar el botón solo en la vista de mensajes -->
               <button @click="activeTab = 'users'" :class="{ 'active': activeTab === 'users' }">
                 <img src="~/assets/back.png" alt="Regresar" class="tab-icon" />
                 Regresar
@@ -155,7 +155,7 @@
     @apply flex-1 text-center p-2 rounded bg-blue-500 hover:bg-gray-500;
   }
   
- .tabs button.active {
+  .tabs button.active {
     @apply bg-blue-700;
   } 
   
