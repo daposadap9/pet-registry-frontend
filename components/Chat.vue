@@ -1,9 +1,9 @@
 <template>
     <div class="flex-1 bg-chat-background p-4 h-screen flex flex-col">
-      <h1 class="text-4xl font-bold text-center mb-6 text-white shadow-lg p-4 border-b-4 border-blue-500">Mensajes</h1>
+      <h1 class="text-4xl font-bold text-center mb-6 text-white shadow-lg p-4 border-b-4 border-blue-500">{{ messages.length > 0 ? messages[0].senderAlias : '' }}</h1>
   
       <!-- Lista de mensajes -->
-      <div class="flex-1 overflow-y-auto mb-20">
+      <div class="flex-1 overflow-y-hidden mb-20">
         <div
           v-for="message in messages"
           :key="message.id"

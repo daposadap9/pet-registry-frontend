@@ -5,7 +5,7 @@
         <Header />
         <div class="mx-auto px-4 py-6 mt-16 p-1 h-full bg-gray-900">
           <div class="hidden lg:flex">
-            <UserList :users="users" @select-user="selectUser" />
+            <UserList :users="users" :lastMessages="lastMessages" @select-user="selectUser" />
             <Chat :messages="messages" :sendMessage="sendMessage" :newMessage="newMessage" />
           </div>
           <div class="lg:hidden">
@@ -13,8 +13,8 @@
               <button @click="activeTab = 'users'" :class="{ 'active': activeTab === 'users' }">Usuarios</button>
               <button @click="activeTab = 'messages'" :class="{ 'active': activeTab === 'messages' }">Mensajes</button>
             </div>
-            <div v-if="activeTab === 'users'">
-              <UserList :users="users" @select-user="selectUser" />
+            <div class="bg-chat-background" v-if="activeTab === 'users'">
+              <UserList :users="users" :lastMessages="lastMessages" @select-user="selectUser" />
             </div>
             <div v-if="activeTab === 'messages'">
               <Chat :messages="messages" :sendMessage="sendMessage" :newMessage="newMessage" />
@@ -49,7 +49,13 @@
         newMessage: {
           content: ''
         },
-        activeTab: 'users'
+        activeTab: 'users',
+        lastMessages: {
+          1: 'Muy bien, gracias.',
+          2: 'Muy bien, gracias.',
+          3: 'Muy bien, gracias.'
+        },
+        selectedUserAlias: ''
       };
     },
     methods: {
@@ -86,6 +92,7 @@
         };
   
         this.messages = chats[user.id] || [];
+        this.selectedUserAlias = user.alias;
         this.activeTab = 'messages';
       },
       logout() {
